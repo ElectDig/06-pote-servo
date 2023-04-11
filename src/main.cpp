@@ -24,8 +24,7 @@
  */
 
 
-#define LOOP_DELAY  250
-#define SERVO_TIME  20
+#define SERVO_TIME  100
 
 Servo servo;            //    New object of type Servo
 
@@ -37,26 +36,24 @@ setup(void)
     delay(2000);
 }
 
-static int last_pos;            // only for DEBUG
+static int last_pos;    
 
 void
 loop(void)
 {
     int sensorValue, angle;
-    int servo_pos;              //  only for DEBUG
+    int servo_pos;  
 
     sensorValue = analogRead(ANAIN);
     angle = map( sensorValue, 0, RANGE, 0, 180 );
     servo.write(angle);
     delay(SERVO_TIME);
 
-#if DEBUG
     servo_pos = servo.read();
     if( last_pos != servo_pos )
     {
         Serial.printf( "angle = %3d, servo position = %3d\n", angle, servo.read() );
         last_pos = servo_pos;
     }
-#endif
 
 }
